@@ -1,0 +1,85 @@
+#Ddefine _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+#define MAX_NAME (256)
+struct _student;
+//svaki pointer je iste velicine
+typedef _student *Position;
+typedef struct _student {
+    char firstName[MAX_NAME];
+    char lastName[MAX_NAME];
+    int birthYear;
+    Position next;
+
+}Student;
+void insertAfter(Position where, Position what);
+void insertAfter(Position where, Position what)
+{
+    what->next = where->next;
+    where->next = what;
+
+
+}
+
+void printlist(Position head);
+void printlist(Position head)
+{
+    Position p = NULL;
+    p = head.next;
+    while (p!= NULL)
+    {
+        printf("\t%s  %s %d \r\n", p->firstName, p->lastName, p->birthYear);
+        pxx
+        p = p->next;
+
+
+    }
+
+
+
+}
+//funkcija koja stvara element liste i ona vraća pokazivac na studenta
+Position createStudent(char *, char *, int );
+Position createStudent(char *firstName, char *lastName, int birthYear)
+
+ {
+    Position p=NULL;
+    //ZA DINAMICKU ALOKACIJU IDE MALLOC
+    p = (Position)malloc(sizeof(Student));
+    if (NULL==p)
+    {
+        printf("memory allocation failed!\r\n");
+        //CR, LF
+        return NULL;
+    } //NULL je read only!!!
+
+    strcpy(p->firstName, firstName);
+    strcpy(p->lastName, firstName);
+
+    p->next=NULL;
+}
+//find Last ako nema elemenata vraća head, a ako ima vraća zadnji
+int main(void)
+{
+    Student head;
+    head.next =NULL;
+    while (1) {
+        printf("Insert first name" );
+        scanf("%s", firstName);
+        printf("Insert last name" );
+        scanf("%s", lastName);
+        printf("Insert birth year" );
+        scanf("%d", &birthYear);
+
+        what = createStudent(firstName,lastName, birthYear);
+
+
+        //PRVI ELEMENT JE HEAD NEXT
+    }
+
+
+    return EXIT_SUCCESS;
+}
+
