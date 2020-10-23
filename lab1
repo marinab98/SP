@@ -1,0 +1,129 @@
+
+// program koji prvo pročita koliko redaka ima datoteka, tj. koliko ima studenata
+//zapisanih u datoteci. Nakon toga potrebno je dinamički alocirati prostor za niz struktura
+//studenata (ime, prezime, bodovi) i učitati iz datoteke sve zapise. Na ekran ispisati ime,
+//prezime,apsolutni i relativni broj bodova.
+//Napomena: Svaki redak datoteke sadrži ime i prezime studenta, te broj bodova na kolokviju.
+//relativan_br_bodova = br_bodova/max_br_bodova*100
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#define PRAZNO (-2)
+#define NEPOSTOJI (-4)
+#define NEOTVARA (-3)
+#define ERROR (-1)
+#define MAX_LINE_SIZE 1024
+#define OKEJ (0)
+
+
+struct studenti
+{
+	char ime[128];
+	char prezime[128];
+	int bodovi;
+};
+int brojanjeStudenata( char*);
+int ucitavanjeIIspisStudenata(char*,int);
+int ucitavanje(struct studenti*, FILE*);
+int ispis(struct studenti*);
+
+
+int main()
+{
+	int y;
+	int broj, succ;
+	char* imeDatoteke = NULL;
+
+	imeDatoteke = (char*)malloc(1024 * sizeof(char));
+	if (imeDatoteke == NULL)
+	{
+		printf("greska pri alokaciji");
+		return ERROR;
+	}
+	printf("unesite ime datoteke");
+	scanf("%s", imeDatoteke);
+
+	if (strlen(imeDatoteke) == NULL)
+	{
+		printf("datoteka ne moze biti prazan string");
+		return PRAZNO;
+	}
+	strcat(imeDatoteke, ".txt");
+
+	broj = brojanjeStudenata(imeDatoteke);
+	if (broj == -3) {
+	printf("Datoteka nije otvorena");
+	return NEOTVARA;
+	}
+	else 
+		printf("broj studenata je %d\n", broj);
+
+	succ = ucitavanjeIIspisStudenata(imeDatoteke, broj);
+	if (succ == -1)
+		printf("greska pri alokaciji");
+	else if (succ == -3)
+		printf("Datoteka nije otvorena");
+
+	system("pause");
+	return 0;
+}
+int brojanjeStudenata( char* fileName)
+{
+	FILE* fp;
+	char line[MAX_LINE_SIZE] = { 0 };
+	int brojanje = 0;
+
+
+	fp = fopen(fileName, "r");
+
+	if (fp == NULL)
+	{
+		return NEOTVARA;
+	}
+	while (!feof(fp))
+	{
+		fgets(line, MAX_LINE_SIZE, fp);
+		if (strlen(line) == 0)
+			continue;
+		brojanje++;
+
+	}
+	fclose(fp);
+	return brojanje;
+}
+int ucitavanjeIIspisStudenata(char*fileName,int brStud)
+{
+	int i;
+	struct studenti* stud;
+	FILE* fp = NULL;
+
+	fp = fopen(fileName, "r");
+	if (fp == NULL)
+		return NEOTVARA;
+
+	stud = (struct studenti*)malloc(brStud * sizeof(struct studenti));
+	if (stud == NULL) {
+		return ERROR;
+	}
+	for(i=0;i<brStud;i++)
+	{
+		ucitavanje(stud + i,fp);
+	}
+	for (i = 0; i < brStud; i++)
+		ispis(stud + i);
+	fclose(fp);
+	return OKEJ;
+
+}
+int ucitavanje(struct studenti* st,FILE* fp)
+{
+	fscanf(fp, " %d %s %s ", &st->bodovi, st->ime, st->prezime);
+	return OKEJ;
+}
+int ispis(struct studenti* st)
+{
+	printf("%s %s %d %.2f \n", st->ime, st->prezime, st->bodovi, (float)(st->bodovi / 50.0) * 100.0 );
+	return OKEJ;
+}
