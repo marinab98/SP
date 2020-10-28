@@ -43,7 +43,7 @@ int main()
 	if (strlen(imeDatoteke) == NULL)
 	{
 		printf("Datoteka je prazan string");
-		return PRAZNO;
+		return prazanpopis;
 	}
 	strcat(imeDatoteke, ".txt");
 
@@ -71,7 +71,7 @@ int main()
 int brojstudenata(char *fileName)
 {
     FILE *fp;
-    int br=0
+    int br=0;
     fp = fopen(fileName, "r");
     if (fp == NULL)
 	{
