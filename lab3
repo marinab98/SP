@@ -1,0 +1,172 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#define MAX_NAME (256)
+#define NO (-1)
+struct _student;
+
+typedef struct _student *Position;
+typedef struct _student {
+    char firstName[MAX_NAME];
+    char lastName[MAX_NAME];
+    int birthYear;
+    Position next;
+
+}Student;
+
+
+Position createStudent(char *, char *, int );
+void insertAfter(Position where, Position what);
+void printlist(Position head);
+void insertBefore(Position where, Position what);
+Position find(Position , char* );
+void deleteElement(Position, char*);
+Position findtheonebefore(Position, char*);
+void insertAfterCertain(Position where, Position what);
+void Sort(Position);
+
+int main(void)
+{
+    Student head;
+
+    char firstName[MAX_NAME] = {0};
+	char lastName[MAX_NAME] = {0};
+	int birthYear = 0;
+	head.next = NULL;
+    while (1) {
+        printf("Insert first name" );
+        scanf("%s", firstName);
+        printf("Insert last name" );
+        scanf("%s", lastName);
+        printf("Insert birth year" );
+        scanf("%d", &birthYear);
+        //*****
+        head.next = createStudent(firstName,lastName, birthYear);
+        insertAfter(&head,p);
+        printlist(Position head);
+
+    }
+    return EXIT_SUCCESS;
+}
+Position createStudent(char *firstName, char *lastName, int birthYear)
+
+ {
+    Position p=NULL;
+    //ZA DINAMICKU ALOKACIJU IDE MALLOC
+    p = (Position)malloc(sizeof(Student));
+    if (NULL==p)
+    {
+        printf("memory allocation failed!\r\n");
+        //CR, LF
+        return NULL;
+    }
+    //NULL je read only!!!
+
+    strcpy(p->firstName, firstName);
+    strcpy(p->lastName, firstName);
+
+    p->next=NULL;
+}
+
+void insertAfter(Position where, Position what)
+{
+    what->next = where->next;
+    where->next = what;
+
+
+}
+void insertBefore(Position where, Position what)
+{
+    //*********
+    what->next=where->next;
+    where->next=what;
+
+}
+void printlist(Position head)
+{
+    Position p = NULL;
+    p = head.next;
+    while (p!= NULL)
+    {
+        printf("\t%s  %s %d \r\n", p->firstName, p->lastName, p->birthYear);
+        p=head->next;
+        p = p->next;
+    }
+}
+
+void deleteElement(Position p, char* surame)
+{
+    Position previous;
+    previous = findtheonebefore(p, surname);
+    if(previous!=NULL)
+    {
+        p=previous->next;
+        previous->next=p->next;
+        free(p);
+    }
+}
+
+Position findtheonebefore(Position p, char* surname)
+{
+    Position previous = p;
+    p=p->next;
+
+
+    while (p->next != NULL && strcmp(p->lastName, surname)) {
+		previous = p;
+		p = p->next;
+	}
+	if (p->next == NULL) {
+		printf("...!\n");
+		return NULL;
+	}
+	return previous;
+
+
+}
+Position find(Position q, char* s) {
+	while (q->next != NULL && strcmp(q->lastName, x))
+		q = q->next;
+	return q;
+}
+
+
+
+/*void Sort(Position p)
+{
+    Position x,y,temp,end;
+    end=NULL;
+    while(p->next!=NULL)
+    {
+        y=end;
+        y=p->next;
+        while (y->next!=end)
+        {
+            temp=x->next;
+            y->next=temp;
+            x->next=temp->next;
+            temp_next=x;
+        }
+        y=x;
+        x=x->next;
+        end=x;
+    }
+
+
+
+}*/
+
+int insertAfterCertain(//+++Position where, Position what)
+{
+    int y;
+    Position temp;
+    temp = find(q,s);
+    if(temp=NULL)
+        return NO;
+    //????? y=insertBefore(where, what);
+    
+
+
+
+}
