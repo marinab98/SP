@@ -105,7 +105,7 @@ int ReadFromFile(Position P)
 	if (fileName == NULL) return ERROR;
 	memset(fileName, '\0', BUFFER_LENGTH);
 
-	printf("\r\n\tUnesite ime dadoteke za citanje : ");
+	printf("\r\n\tUnesite ime datoteke: ");
 	scanf(" %s", fileName);
 
 	if (strchr(fileName, '.') == NULL)
