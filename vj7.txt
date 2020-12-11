@@ -1,0 +1,28 @@
+4 5 + 6 * postfix
+4 5, 5 je zapravo prvi član
+postfix je dobro zadan ako imamo samo jedan elem na stogu
+SSCANF - STRING -> ne pomiče pokazivač
+FSCANF - FILE -> pomiče pokazivač za 1
+44 5 + 6 * EOF
+int value = 0
+int count = 0
+value = SSCANF(buffer, "%d", "%n", &broj, &count)
+BUFFER (spremamo podatke u njega)
+-> pokazivač na niz
+char* buffer = NULL; -> ADRESNA VARIJABLA koja sprema adresu SAMO 1 char-a
+buffer (char*)malloc(1000sizeof(char))
+fgets(buffer, 1000, fp)
+fgetc
+%n - 
+%d -> ignorira razmake, samo hvata broj
+fscanf(fp, "%s", buffer)
+buffer += count
+memset uzme buffer i pregazi ga s nulama
+ako više puta čitamo buffer i želimo nešto izmijeniti, onda koristimo memset da ga pregazimo s nulama
+budimir
+marinar r se prekopira -> \0 = string 
+'\0' -> nul tabulator ~ 0 -> da bismo niz znakova shvatili kao string 
+strlen
+strcpy
+
+void *memset(void *str, int c, size_t n)
