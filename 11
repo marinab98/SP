@@ -1,0 +1,102 @@
+/*Napisati kod koji za zadane podatke studenata (matični broj, ime i prezime) pravi hash tablicu sa zasebnim redovima.
+Tablica ima 11 mjesta, a funkcija za preslikavanje ključ računa da se zbraja ASCII vrijednost prvih pet slova prezimena
+i zatim računa ostatak cjelobrojnog dijeljenja te vrijednosti s veličinom tablice. Studenti s istim ključem se pohranjuju
+u vezanu listu sortiranu po prezimenima i imenima.Kada se tablica izgradi treba ispisati cijelu tablicu (naglasiti na kojem
+ključu se nalaze koji podaci) te ponuditi mogućnostda se za određenog studenta (prezime i ime) ispiše njegov matični broj. */
+#define _CRT_SECURE_NO_WARNINGS
+#include<string.h>
+#include<stdlib.h>
+#include<stdio.h>
+#define DATA_SIZE(11)
+
+struct cvorListe;
+typedef struct cvorListe *Pozicija;
+typedef struct cvorListe *Lista;
+struct hashT;
+typedef struct hashT *hashTab;
+
+hashTab Inicijalizacija (int vel);
+void IzbrisiHash(hashTab H);
+Pozicija Trazi(int kljuc, hashTab H);
+void Dodaj(int kljuc, hashTab H);
+
+struct cvorListe{
+
+    int el;
+    Pozicija Next;
+    };
+
+struct hashT {
+
+    int vel;
+    Lista *hashListe;
+};
+
+int IduciProsti(int x);
+int Preslik(int kljuc, int vel);
+
+hashTab Inicijalizacija(int vel ){
+
+    hashTab H;
+    int i;
+
+    H = (hashTab)malloc(sizeof(struct hashT));
+    if (H==NULL)
+    {
+        printf("greska pri alokaciji memorije");
+        exit(-1);
+    }
+    H->vel = IduciProsti(vel);
+    H->hashListe = (Lista *)mallloc(sizeof(Lista)*H->vel);
+    if (H->hashListe == NULL) {
+        printf("greska pri inicijalizaciji memorije");
+        exit(-1);
+    }
+
+    for(i=0; i<H->vel; i++)
+        H->hashListe[i] = NULL;
+
+    return H;
+}
+
+
+Pozicija Trazi(int kljuc, hashTab H)
+{
+    Lista L;
+    L = H->hashListe[Preslik(kljuc, H->vel)];
+    while (L != NULL && L->el!=kljuc)
+        L=L->Next;
+    return L;
+
+
+
+}
+void Dodaj(int kljuc, hashTab H)
+{
+
+    Pozicija novi;
+    Lista L;
+    novi = (Pozicija)malloc(sizeof(struct cvorListe));
+    if (novi == NULL)
+    {
+        printf("greska");
+        novi->el = kljuc;
+        novi->Next =H->hashListe[Preslik(kljuc, H->vel)];
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
